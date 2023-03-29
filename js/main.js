@@ -2,7 +2,8 @@ const firstname = document.querySelector('input[name="name"]');
 const surname = document.querySelector('input[name="surname"]');
 const birthday = document.querySelector('input[name="birthday"]');
 const go = document.querySelector('.go');
-const output = document.querySelector('.output')
+const output = document.querySelector('.output');
+const form = document.querySelector('.form-inputs');
 
 let people = [];
 
@@ -12,14 +13,18 @@ const clearInputs = () => {
     birthday.value = '';
 };
 
-const addPeople = () => {
+const addPeople = (ev) => {
+    ev.preventDefault();
+    let formData = new FormData(form);
     people.push({
-        name: firstname.value,
-        surname: surname.value,
-        birthday: birthday.value,
+        name: formData.get('name'),
+        surname: formData.get('surname'),
+        birthday: formData.get('birthday'),
     });
     renderPeople();
     clearInputs();
+    
+    
 };
 
 const renderPeople = () => {
@@ -30,4 +35,4 @@ const renderPeople = () => {
     output.innerHTML = res;
 };
 
-go.addEventListener('click', addPeople);
+form.addEventListener('submit', addPeople);
